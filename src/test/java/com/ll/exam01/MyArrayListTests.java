@@ -1,7 +1,10 @@
 package com.ll.exam01;
 
+import com.ll.TestUt;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,10 +44,15 @@ public class MyArrayListTests {
     void t04() {
         MyArrayList<String> list = new MyArrayList<>();
 
-        list.add("사과");
-        list.add("복숭아");
-        list.add("블루베리");
+        //현재 배열의 길이 -> 코드를 조금 더 방어적으로 작성하기 위해
+        int dataLen1 = ((String[]) TestUt.getFieldValue(list, "data", null)).length;
 
-        assertThat(list.size()).isEqualTo(3);
+        // IntStream.range(0, 10); = [0, ... 9] 까지의 int 스트림 발생
+        // 딱 1번 넘칠만큼의 데이터
+        IntStream.range(0, dataLen1 + 1)
+                .forEach(index -> list.add("사과 %d".formatted(index)));
+
+        int dataLen2 = ((String[])TestUt.getFieldValue(list, "data", null)).length;
+        assertThat(dataLen2).isGreaterThan(dataLen1);
     }
 }
