@@ -2,12 +2,15 @@ package com.ll.exam01;
 
 import com.ll.TestUt;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class MyArrayListTests {
     @Test
     @DisplayName("size()")
@@ -35,8 +38,11 @@ public class MyArrayListTests {
         list.add("사과");
         list.add("복숭아");
 
-        assertThat(list.get(0)).isEqualTo("사과");
-        assertThat(list.get(1)).isEqualTo("복숭아");
+        String e0 = (String) list.get(0);
+        String e1 = (String) list.get(1);
+
+        assertThat(e0).isEqualTo("사과");
+        assertThat(e1).isEqualTo("복숭아");
     }
 
     @Test
@@ -44,15 +50,16 @@ public class MyArrayListTests {
     void t04() {
         MyArrayList<String> list = new MyArrayList<>();
 
-        //현재 배열의 길이 -> 코드를 조금 더 방어적으로 작성하기 위해
-        int dataLen1 = ((String[]) TestUt.getFieldValue(list, "data", null)).length;
+        // 초기 배열의 길이
+        int dataLen1 = ((Object[]) TestUt.getFieldValue(list, "data", null)).length;
 
         // IntStream.range(0, 10); = [0, ... 9] 까지의 int 스트림 발생
         // 딱 1번 넘칠만큼의 데이터
         IntStream.range(0, dataLen1 + 1)
                 .forEach(index -> list.add("사과 %d".formatted(index)));
 
-        int dataLen2 = ((String[])TestUt.getFieldValue(list, "data", null)).length;
+        // 현재 배열의 길이
+        int dataLen2 = ((Object[]) TestUt.getFieldValue(list, "data", null)).length;
         assertThat(dataLen2).isGreaterThan(dataLen1);
     }
 
@@ -62,7 +69,7 @@ public class MyArrayListTests {
         MyArrayList<String> list = new MyArrayList<>(200);
 
         // 초기 배열의 길이
-        int dataLength = ((String[]) TestUt.getFieldValue(list, "data", null)).length;
+        int dataLength = ((Object[]) TestUt.getFieldValue(list, "data", null)).length;
 
         assertThat(dataLength).isEqualTo(200);
     }
@@ -102,5 +109,31 @@ public class MyArrayListTests {
         assertThat(list.indexOf("사과 0")).isEqualTo(0);
         assertThat(list.indexOf("사과 1")).isEqualTo(1);
         assertThat(list.indexOf("사과 100")).isEqualTo(-1);
+    }
+
+    @Test
+    @DisplayName("add(true)")
+    void t09() {
+        MyArrayList<Boolean> list = new MyArrayList<>();
+
+        list.add(true);
+        list.add(false);
+
+        assertThat(list.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("get(1)")
+    void t10() {
+        MyArrayList<Boolean> list = new MyArrayList<>();
+
+        list.add(true);
+        list.add(false);
+
+        boolean e0 = (boolean) list.get(0);
+        boolean e1 = (boolean) list.get(1);
+
+        assertThat(e0).isEqualTo(true);
+        assertThat(e1).isEqualTo(false);
     }
 }

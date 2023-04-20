@@ -4,7 +4,7 @@ import java.util.stream.IntStream;
 
 public class MyArrayList<T> {
     public boolean debug = false;
-    private String[] data;
+    private Object[] data;
 
     private int size = 0;
 
@@ -13,14 +13,14 @@ public class MyArrayList<T> {
     }
 
     public MyArrayList(int dataLength) {
-        data = new String[dataLength];
+        data = new Object[dataLength];
     }
 
     public int size() {
         return size;
     }
 
-    public boolean add(String element) {
+    public boolean add(T element) {
         //공간이 부족하면 새로운 data 객체 생성
         makeNewDataIfNotEnough();
         data[size] = element;
@@ -36,7 +36,7 @@ public class MyArrayList<T> {
     }
 
     private void makeNewData() {
-        String[] newData = new String[data.length * 2];
+        Object[] newData = new String[data.length * 2];
 
         for (int i = 0; i < data.length; i++) {
             newData[i] = data[i];
@@ -53,7 +53,7 @@ public class MyArrayList<T> {
         return size >= data.length;
     }
 
-    public String get(int index) {
+    public Object get(int index) {
         return data[index];
     }
 
