@@ -1,8 +1,20 @@
 package com.ll.exam01;
 
+import java.util.stream.IntStream;
+
 public class MyArrayList<T> {
-    private String[] data = new String[100];
+    public boolean debug = false;
+    private String[] data;
+
     private int size = 0;
+
+    public MyArrayList() {
+        this(2);
+    }
+
+    public MyArrayList(int dataLength) {
+        data = new String[dataLength];
+    }
 
     public int size() {
         return size;
@@ -30,6 +42,10 @@ public class MyArrayList<T> {
             newData[i] = data[i];
         }
 
+        if ( debug ) {
+            System.out.printf("배열크기 증가 : %d => %d\n", data.length, newData.length);
+        }
+
         data = newData;
     }
 
@@ -39,5 +55,16 @@ public class MyArrayList<T> {
 
     public String get(int index) {
         return data[index];
+    }
+
+    public int indexOf(String element) {
+        //배열 객체는 크기 고정
+        //배열 내 데이터 수 = size
+        for (int i = 0; i < size; i++) {
+            if (element.equals(data[i]))
+                return i;
+        }
+
+        return -1;
     }
 }
