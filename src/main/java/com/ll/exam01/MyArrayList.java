@@ -36,7 +36,7 @@ public class MyArrayList<T> {
     }
 
     private void makeNewData() {
-        Object[] newData = new String[data.length * 2];
+        Object[] newData = new Object[data.length * 2];
 
         for (int i = 0; i < data.length; i++) {
             newData[i] = data[i];
@@ -53,11 +53,11 @@ public class MyArrayList<T> {
         return size >= data.length;
     }
 
-    public Object get(int index) {
-        return data[index];
+    public T get(int index) {
+        return (T) data[index];
     }
 
-    public int indexOf(String element) {
+    public int indexOf(T element) {
         //배열 객체는 크기 고정
         //배열 내 데이터 수 = size
         for (int i = 0; i < size; i++) {

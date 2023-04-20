@@ -38,8 +38,8 @@ public class MyArrayListTests {
         list.add("사과");
         list.add("복숭아");
 
-        String e0 = (String) list.get(0);
-        String e1 = (String) list.get(1);
+        String e0 = list.get(0);
+        String e1 = list.get(1);
 
         assertThat(e0).isEqualTo("사과");
         assertThat(e1).isEqualTo("복숭아");
@@ -130,8 +130,8 @@ public class MyArrayListTests {
         list.add(true);
         list.add(false);
 
-        boolean e0 = (boolean) list.get(0);
-        boolean e1 = (boolean) list.get(1);
+        boolean e0 = list.get(0);
+        boolean e1 = list.get(1);
 
         assertThat(e0).isEqualTo(true);
         assertThat(e1).isEqualTo(false);
