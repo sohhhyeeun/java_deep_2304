@@ -136,4 +136,67 @@ public class MyArrayListTests {
         assertThat(e0).isEqualTo(true);
         assertThat(e1).isEqualTo(false);
     }
+
+    @Test
+    @DisplayName("contains(\"사과 0\")")
+    void t11() {
+        MyArrayList<String> list = new MyArrayList<>(2);
+
+        IntStream.range(0, 2)
+                .forEach(index -> list.add("사과 %d".formatted(index)));
+
+        assertThat(list.contains("사과 0")).isEqualTo(true);
+        assertThat(list.contains("사과 1")).isEqualTo(true);
+        assertThat(list.contains("사과 2")).isEqualTo(false);
+    }
+
+    @Test
+    @DisplayName("addAt")
+    void t12() {
+        MyArrayList<String> list = new MyArrayList<>();
+
+        list.add("Element1"); // 0번 좌석에 착석
+        list.add("Element2"); // 1번 좌석에 착석
+        list.add("Element3"); // 2번 좌석에 착석
+
+        list.add(1, "Element4");
+        // 2 => 3
+        // 1 => 2
+        // 1번 좌석에 착석
+
+        assertThat(list.size()).isEqualTo(4);
+
+        assertThat(list.get(0)).isEqualTo("Element1");
+        assertThat(list.get(1)).isEqualTo("Element4");
+        assertThat(list.get(2)).isEqualTo("Element2");
+        assertThat(list.get(3)).isEqualTo("Element3");
+    }
+
+    @Test
+    @DisplayName("set")
+    void t13() {
+        MyArrayList<String> list = new MyArrayList<>();
+        list.add("Element1"); // 0
+        list.add("Element2"); // 1
+        list.add("Element3"); // 2
+
+        assertThat(list.set(0, "Element4")).isEqualTo("Element1");
+        assertThat(list.size()).isEqualTo(3);
+
+        assertThat(list.get(0)).isEqualTo("Element4");
+        assertThat(list.get(1)).isEqualTo("Element2");
+        assertThat(list.get(2)).isEqualTo("Element3");
+    }
+
+    @Test
+    @DisplayName("remove")
+    void t14() {
+        MyArrayList<String> list = new MyArrayList<>();
+        list.add("Element1");
+        list.add("Element2");
+        list.add("Element3");
+
+        assertThat(list.remove(0)).isEqualTo("Element1");
+        assertThat(list.size()).isEqualTo(2);
+    }
 }
